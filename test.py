@@ -1,154 +1,32 @@
-# def factorial_recursive(n):
-#     if n == 0 or n == 1:
-#         return 1
-#     return n * factorial_recursive(n - 1)
-
-
-# def factorial_iterative(n):
-#     """
-#     Computes the factorial of a non-negative number n (using iteration)
-#     """
-#     if n == 0:
-#         return 1
-#
-#     current_result = 1
-#
-#     for i in range(n):
-#         current_result += i * current_result
-#
-#     return current_result
-#
-#
-# result = factorial_iterative(5)
-# print(result)
-
-#
-# def nat():
-#     n = 0
-#     while True:
-#         n += 1
-#         yield n
-#
-#
-# gen = nat()
-# for _ in range(5):
-#     print(next(gen))
-
-
-# def nat():
-#     """Returns all natural numbers"""
-#     n = 0
-#     while True:
-#         n += 2
-#         yield n
-#
-# gen = nat()
-# for _ in range(10):
-#     print(next(gen))
-
-
-# def factorial_gen():
-#     n = 1
-#     result = 1
-#     while True:
-#         result *= n
-#         yield result
-#         n += 1
-#
-#
-# gen = factorial_gen()
-# for _ in range(5):
-#     print(next(gen))
-
-
-# def fibonacci(n):
-#     fibo = []
-#
-#     for x in range(n):
-#         if len(fibo) < 2:
-#             fibo.append(1)
-#         else:
-#             fibo.append(fibo[-1] + fibo[-2])
-#
-#     return fibo
-#
-#
-# res = fibonacci(10)
-# print(res)
-
-
 import numpy as np
-import matplotlib.pyplot as plt
-
-# Размер на изображението
-width, height = 800, 800
-
-# Създаваме координатна мрежа
-x = np.linspace(-2, 1, width)
-y = np.linspace(-1.5, 1.5, height)
-X, Y = np.meshgrid(x, y)
-C = X + 1j * Y
-Z = np.zeros_like(C)
-iterations = np.zeros(C.shape, dtype=int)
-
-# Максимален брой итерации
-max_iter = 100
-
-# Основен цикъл за изчисление на фрактала
-for i in range(max_iter):
-    mask = np.abs(Z) <= 2
-    Z[mask] = Z[mask] ** 2 + C[mask]
-    iterations[mask] = i
-
-# Визуализиране
-plt.figure(figsize=(8, 8))
-plt.imshow(iterations, cmap='inferno', extent=(-2, 1, -1.5, 1.5))
-plt.axis('off')
-plt.title('Манделброт фрактал', fontsize=16)
-plt.show()
 
 
+def solve_phistomefel_ring(sudoku_grid, red_cells, blue_cells):
+    """
+    Prove that the set (list in python) of red cells contains the same numbers as the set (list in python) of blue cells.
+    """
+    red_nums = [sudoku_grid[row, col] for row, col in red_cells]
+    blue_nums = [sudoku_grid[row, col] for row, col in blue_cells]
+
+    return sorted(red_nums) == sorted(blue_nums)
 
 
+sudoku = np.array([
+    [5, 3, 4, 6, 7, 8, 9, 1, 2],
+    [6, 7, 2, 1, 9, 5, 3, 4, 8],
+    [1, 9, 8, 3, 4, 2, 5, 6, 7],
+    [8, 5, 9, 7, 6, 1, 4, 2, 3],
+    [4, 2, 6, 8, 5, 3, 7, 9, 1],
+    [7, 1, 3, 9, 2, 4, 8, 5, 6],
+    [9, 6, 1, 5, 3, 7, 2, 8, 4],
+    [2, 8, 7, 4, 1, 9, 6, 3, 5],
+    [3, 4, 5, 2, 8, 6, 1, 7, 9]
+])
 
+red_cells = [(0, 0), (0, 1), (1, 0), (1, 1), (7, 0), (7, 1), (8, 0), (8, 1), (0, 7), (0, 8), (1, 7), (1, 8), (7, 7),
+             (7, 8), (8, 7), (8, 8)]
+blue_cells = [(2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (5, 6), (4, 6), (3, 6), (2, 6),
+              (2, 5), (2, 4), (2, 3)]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+areEqual = solve_phistomefel_ring(sudoku, red_cells, blue_cells)
+print(areEqual)
