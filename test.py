@@ -15,14 +15,21 @@ def encode(text):
     return final_string
 
 
-print(encode("AABCCCDEEEE"))
+def decode(text):
+    """
+    Decodes the text using run-length encoding
+    """
+    code = [x for x in text]
 
-# def decode(text):
-#     """
-#     Decodes the text using run-length encoding
-#     """
-#     for char in text:
-#         if char.isdigit():
-#             return
-#
-# decode("A2BC3DE4")
+    final_string = ''
+
+    for char in code:
+        if not char.isdigit():
+            final_string += char
+        else:
+            final_string += code[code.index(char) - 1] * (int(code[code.index(char)]) - 1)
+
+    return final_string
+
+
+print(decode("AABCCCDEEEE"))
