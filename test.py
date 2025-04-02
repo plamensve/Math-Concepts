@@ -1,32 +1,28 @@
-import numpy as np
+from collections import Counter
 
 
-def solve_phistomefel_ring(sudoku_grid, red_cells, blue_cells):
-    """
-    Prove that the set (list in python) of red cells contains the same numbers as the set (list in python) of blue cells.
-    """
-    red_nums = [sudoku_grid[row, col] for row, col in red_cells]
-    blue_nums = [sudoku_grid[row, col] for row, col in blue_cells]
+def encode(text):
+    chars = {ch: text.count(ch) for ch in dict.fromkeys(text)}
 
-    return sorted(red_nums) == sorted(blue_nums)
+    final_string = ''
+    for key, value in chars.items():
+        if value == 1:
+            final_string += key
+        else:
+            final_string += key
+            final_string += str(value)
+
+    return final_string
 
 
-sudoku = np.array([
-    [5, 3, 4, 6, 7, 8, 9, 1, 2],
-    [6, 7, 2, 1, 9, 5, 3, 4, 8],
-    [1, 9, 8, 3, 4, 2, 5, 6, 7],
-    [8, 5, 9, 7, 6, 1, 4, 2, 3],
-    [4, 2, 6, 8, 5, 3, 7, 9, 1],
-    [7, 1, 3, 9, 2, 4, 8, 5, 6],
-    [9, 6, 1, 5, 3, 7, 2, 8, 4],
-    [2, 8, 7, 4, 1, 9, 6, 3, 5],
-    [3, 4, 5, 2, 8, 6, 1, 7, 9]
-])
+print(encode("AABCCCDEEEE"))
 
-red_cells = [(0, 0), (0, 1), (1, 0), (1, 1), (7, 0), (7, 1), (8, 0), (8, 1), (0, 7), (0, 8), (1, 7), (1, 8), (7, 7),
-             (7, 8), (8, 7), (8, 8)]
-blue_cells = [(2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (6, 3), (6, 4), (6, 5), (6, 6), (5, 6), (4, 6), (3, 6), (2, 6),
-              (2, 5), (2, 4), (2, 3)]
-
-areEqual = solve_phistomefel_ring(sudoku, red_cells, blue_cells)
-print(areEqual)
+# def decode(text):
+#     """
+#     Decodes the text using run-length encoding
+#     """
+#     for char in text:
+#         if char.isdigit():
+#             return
+#
+# decode("A2BC3DE4")
