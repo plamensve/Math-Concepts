@@ -1,35 +1,38 @@
-from collections import Counter
+import re
 
 
 def encode(text):
-    chars = {ch: text.count(ch) for ch in dict.fromkeys(text)}
+    """
+    Returns the run-length encoded version of the text
+    (numbers after symbols, length = 1 is skipped)
+    """
+    my_list = []
+    current_string = ''
+    for i in range(len(text)):
 
-    final_string = ''
-    for key, value in chars.items():
-        if value == 1:
-            final_string += key
+        if text[i] == current_string[:1] or current_string == '':
+            current_string += text[i]
         else:
-            final_string += key
-            final_string += str(value)
+            my_list.append(f"{current_string[:1]}{len(current_string)}")
+            current_string = ''
+            current_string += text[i]
 
-    return final_string
+    my_list.append(f"{current_string[:1]}{len(current_string)}")
+
+    result = "".join(my_list)
+    result = result.replace('1', '')
+    return result
 
 
 def decode(text):
-    """
-    Decodes the text using run-length encoding
-    """
-    code = [x for x in text]
+    pattern = re.findall(r'([A-Z])(\d*)', text)
 
-    final_string = ''
+    result = ''
+    for char, count in pattern:
+        num = int(count) if count else 1
+        result += char * num
 
-    for char in code:
-        if not char.isdigit():
-            final_string += char
-        else:
-            final_string += code[code.index(char) - 1] * (int(code[code.index(char)]) - 1)
-
-    return final_string
+    return result
 
 
-print(decode("AABCCCDEEEE"))
+print(encode('A3TGC3TA2CTAGAT2GA3C3G2T'))
